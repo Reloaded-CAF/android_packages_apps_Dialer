@@ -19,6 +19,7 @@ package com.android.dialer.app.settings;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import com.android.dialer.app.R;
+import com.android.dialer.callrecord.impl.CallRecorderService;
 
 public class DisplayOptionsSettingsFragment extends PreferenceFragment {
 
@@ -26,5 +27,10 @@ public class DisplayOptionsSettingsFragment extends PreferenceFragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.display_options_settings);
+    if (!CallRecorderService.isEnabled(getActivity())) {
+      getPreferenceScreen().removePreference(
+        findPreference(getActivity().getString(R.string.call_recording_category_key))
+      );
+    }
   }
 }
